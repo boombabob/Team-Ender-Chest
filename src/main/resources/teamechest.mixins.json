@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "boombabob.teamechest.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+      "AddTeamMixin",
+		"RemoveTeamMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
