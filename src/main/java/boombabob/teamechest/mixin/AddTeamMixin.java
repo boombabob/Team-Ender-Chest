@@ -1,5 +1,6 @@
 package boombabob.teamechest.mixin;
 
+import boombabob.teamechest.Main;
 import boombabob.teamechest.TeamEChests;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.scoreboard.Team;
@@ -12,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class AddTeamMixin {
 	@Inject(at = @At("RETURN"), method = "addTeam")
 	private void init(String name, CallbackInfoReturnable<Team> cir) {
-		TeamEChests.newInventory(cir.getReturnValue());
+		if (Main.CONFIG.modifyEnderChests & Main.CONFIG.teamEnderChests) {
+			TeamEChests.newInventory(cir.getReturnValue());
+		}
 	}
 }

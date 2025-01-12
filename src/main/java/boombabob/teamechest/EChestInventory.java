@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public class EChestInventory implements Inventory {
 
-    public DefaultedList<ItemStack> items = DefaultedList.ofSize(27, ItemStack.EMPTY);
+    public DefaultedList<ItemStack> items = DefaultedList.ofSize(Main.CONFIG.enderChestRows * 9, ItemStack.EMPTY);
 
     // Quite revolutionary overrides...
     @Override
