@@ -6,12 +6,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import java.util.Hashtable;
 
 
 public class EChestInventory implements Inventory {
 
-    public DefaultedList<ItemStack> items = DefaultedList.ofSize(Main.CONFIG.enderChestRows * 9, ItemStack.EMPTY);
+    public DefaultedList<ItemStack> items;
+    public Hashtable<PlayerEntity, BlockPos> playerAccessPositions = new Hashtable<>();
+
+    EChestInventory(TeamEChests.EChestType eChestType) {
+        items = DefaultedList.ofSize(eChestType.rows * TeamEChests.ROW_WIDTH, ItemStack.EMPTY);
+    }
 
     // Quite revolutionary overrides...
     @Override
@@ -62,10 +70,10 @@ public class EChestInventory implements Inventory {
     @Override
     public void onOpen(PlayerEntity player) {
         World world = player.getWorld();
-        // Pretty much the same code as the ender chest open sound
+        // Pretty much the same code as the ender chest open sound.
         world.playSound(
                 null,
-                TeamEChests.accessPosDict.get(player),
+                playerAccessPositions.get(player),
                 SoundEvents.BLOCK_ENDER_CHEST_OPEN,
                 SoundCategory.BLOCKS,
                 0.5F,
@@ -76,14 +84,16 @@ public class EChestInventory implements Inventory {
     @Override
     public void onClose(PlayerEntity player) {
         World world = player.getWorld();
-        // Pretty much the same code as the ender chest close sound
+        // Pretty much the same code as the ender chest close sound.
         world.playSound(
                 null,
-                TeamEChests.accessPosDict.get(player),
+                playerAccessPositions.get(player),
                 SoundEvents.BLOCK_ENDER_CHEST_CLOSE,
                 SoundCategory.BLOCKS,
                 0.5F,
                 world.random.nextFloat() * 0.1F + 0.9F
         );
+        // Don't need the position anymore, so delete it.
+        playerAccessPositions.remove(player);
     }
 }

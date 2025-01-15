@@ -7,7 +7,8 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 
 public class Config {
-    public static String path_string ="team-echest-config";
+    public static String path_string = "team-echest-config";
+    // Initialize config.
     public static ConfigClassHandler<Config> HANDLER = ConfigClassHandler.createBuilder(Config.class)
         .id(Identifier.of(Main.MOD_ID, path_string))
         .serializer(config -> GsonConfigSerializerBuilder.create(config)
@@ -16,21 +17,30 @@ public class Config {
             .build())
         .build();
 
-    @SerialEntry(comment = "Global toggle to disable mod.")
-    public boolean modifyEnderChests = true;
-    @SerialEntry(comment = "Whether ender chests are per team (true) or for everyone (false).")
-    public boolean teamEnderChests = true;
-    @SerialEntry(comment = "Ender chest for teamless players (true).")
-    public boolean enderChestForTeamless = false;
+    @SerialEntry(comment = "Whether personal ender chests are enabled (vanilla implementation).")
+    public boolean personalEnderChest = true;
+    @SerialEntry(comment = "Whether each team has a team ender chest.")
+    public boolean teamEnderChest = true;
+    @SerialEntry(comment = "Whether teamless players have a team ender chest.")
+    public boolean teamlessEnderChest = false;
+    @SerialEntry(comment = "Whether there is a global ender chest for everyone.")
+    public boolean globalEnderChest = false;
+
     @SerialEntry(comment = """
-        Team/Global Ender Chest number of rows (rows are 9 slots wide), must be from 1 to 6.
+        Team Ender Chest number of rows (rows are 9 slots wide), must be from 1 to 6.
         *Will delete the items in any row that no longer exists when decreased.*
         """)
-    public int enderChestRows = 3;
+    public int teamEnderChestRows = 3;
+
     @SerialEntry(comment = """
-        require player to be sneaking to open team/global ender chest.
-        When not sneaking they will still open their personal ender chest.
-        If false team chest will always be opened, never personal chest.
+        Teamless Ender Chest number of rows (rows are 9 slots wide), must be from 1 to 6.
+        *Will delete the items in any row that no longer exists when decreased.*
         """)
-    public boolean sneakToOpen = true;
+    public int teamlessEnderChestRows = 3;
+
+    @SerialEntry(comment = """
+        Global Ender Chest number of rows (rows are 9 slots wide), must be from 1 to 6.
+        *Will delete the items in any row that no longer exists when decreased.*
+        """)
+    public int globalEnderChestRows = 3;
 }

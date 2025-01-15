@@ -13,8 +13,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class AddTeamMixin {
 	@Inject(at = @At("RETURN"), method = "addTeam")
 	private void init(String name, CallbackInfoReturnable<Team> cir) {
-		if (Main.CONFIG.modifyEnderChests & Main.CONFIG.teamEnderChests) {
-			TeamEChests.newInventory(cir.getReturnValue());
+		// Make a new inventory whenever a team is added.
+		if (Main.CONFIG.teamEnderChest) {
+			TeamEChests.newInventory(TeamEChests.EChestType.TEAM, cir.getReturnValue());
 		}
 	}
 }

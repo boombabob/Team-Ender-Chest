@@ -13,7 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class RemoveTeamMixin {
     @Inject(at = @At("TAIL"), method = "removeTeam")
     private void init(Team team, CallbackInfo ci) {
-        if (Main.CONFIG.modifyEnderChests & Main.CONFIG.teamEnderChests) {
+        // Delete the reference to the inventory of removed team. Not necessary, but might as well do it.
+        if (Main.CONFIG.teamEnderChest) {
             TeamEChests.eChestInventories.remove(team);
         }
     }
