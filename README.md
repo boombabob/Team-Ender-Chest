@@ -1,4 +1,4 @@
-# Team-Ender-Chest
+# Team Ender Chests
 [Modrinth](https://modrinth.com/mod/team-ender-chest)
 
 
